@@ -2,3 +2,4 @@ bin/
 obj/
 # Game reference assemblies — copy them from VoxelTycoon_Data/Managed yourself, never commit.
 lib/*.dll
+release/
