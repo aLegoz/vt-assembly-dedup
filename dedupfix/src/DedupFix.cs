@@ -51,12 +51,17 @@ namespace VTDedupFix
             harmony.Patch(
                 AccessTools.Method(typeof(ModLoader), "LoadAssembly"),
                 prefix: new HarmonyMethod(typeof(LoaderDedup), nameof(LoadAssemblyPrefix)));
-            // ModManager.OnDeinitialize ends with `new Harmony("voxeltycoon.harmony").UnpatchAll()`
-            // — the no-argument overload, wiping EVERY mod's patches, ours included, on each
-            // game→menu transition. Re-install right after from this postfix: the currently running
-            // compiled replacement still contains it, so the fix survives into the next cycle's scan.
+            // BOTH mod managers end their OnDeinitialize with
+            // `new Harmony("voxeltycoon.harmony").UnpatchAll(null)`, wiping EVERY mod's patches,
+            // ours included: MainMenuModManager on leaving the menu (i.e. right BEFORE the game's
+            // mod scan!), ModManager on leaving a game. Re-install right after from these
+            // postfixes: the still-running compiled replacement contains them, so the fix
+            // survives into the next scan.
             harmony.Patch(
                 AccessTools.Method(typeof(ModManager), "OnDeinitialize"),
+                postfix: new HarmonyMethod(typeof(LoaderDedup), nameof(ResurrectPostfix)));
+            harmony.Patch(
+                AccessTools.Method(typeof(MainMenuModManager), "OnDeinitialize"),
                 postfix: new HarmonyMethod(typeof(LoaderDedup), nameof(ResurrectPostfix)));
             Debug.Log("[VTDedupFix] Loader dedup installed.");
         }
