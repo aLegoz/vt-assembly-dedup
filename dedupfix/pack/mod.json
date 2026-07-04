@@ -1,7 +1,8 @@
-{
+﻿{
   "Title": "Assembly Dedup Fix",
   "Description": "Fixes duplicate in-memory loading of mod DLLs (menu scan + game load create separate assembly copies; Harmony then re-resolves patches into the stale copy, silently breaking mods that define their own building types). Reuses the already-loaded assembly instead. Proof-of-concept for a game-side loader fix.",
-  "Tags": ["Tool"],
+  "Tags": ["Other"],
   "Dependencies": [],
   "Hidden": false
 }
+

@@ -1,7 +1,8 @@
-{
+﻿{
   "Title": "VT Duplicate Assembly Repro (B)",
   "Description": "Half of a minimal two-mod repro: mod DLLs are loaded as duplicate in-memory assemblies, and Harmony re-resolves patch methods into the stale menu-scan copy once a second mod patches the same method. Enable together with part A and watch Player.log for [ReproA]/[ReproB] lines.",
-  "Tags": ["Tool"],
+  "Tags": ["Other"],
   "Dependencies": [],
   "Hidden": false
 }
+
